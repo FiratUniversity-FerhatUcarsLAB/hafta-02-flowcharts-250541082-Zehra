@@ -1,8 +1,14 @@
 İsim - Soy isim : Zehra ÖZDEMİR 
 Öğrenci No:250541082
 
- Graphviz:<img width="1386" height="1808" alt="graphviz (1)" src="https://github.com/user-attachments/assets/fd52c41f-ca19-4307-ac0e-7c06917be2ca" />
+[pseudocode.md.txt](https://github.com/user-attachments/files/22910803/pseudocode.md.txt)
+   
+[flowchart.dot.txt](https://github.com/user-attachments/files/22910987/flowchart.dot.txt)
 
-sistemin kısa açıklaması (maks. 5-6 satır):
+<img width="1386" height="1808" alt="image" src="https://github.com/user-attachments/assets/571c9f6f-b623-47a7-a59c-e61c6e23c10c" />
 
-[pseudocode.md.txt](https://github.com/user-attachments/files/22909942/pseudocode.md.txt)
+[llm-conversations.txt](https://github.com/user-attachments/files/22911124/llm-conversations.txt)
+
+sistem açıklaması:
+
+[README.md.txt](https://github.com/user-attachments/files/22911215/README.md.txt)
