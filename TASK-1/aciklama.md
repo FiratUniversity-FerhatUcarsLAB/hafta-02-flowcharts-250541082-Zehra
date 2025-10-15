@@ -6,8 +6,8 @@
 [flowchart.dot.txt](https://github.com/user-attachments/files/22910987/flowchart.dot.txt)
 
 <img width="1386" height="1808" alt="image" src="https://github.com/user-attachments/assets/571c9f6f-b623-47a7-a59c-e61c6e23c10c" />
-
-[llm-conversations.txt](https://github.com/user-attachments/files/22911124/llm-conversations.txt)
+ 
+ https://g.co/gemini/share/1c67886d2b07
 
 sistem açıklaması:
 
