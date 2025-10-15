@@ -1,3 +1,11 @@
+ADI SOYADI:Zehra ÖZDEMİR 
+ ÖĞRENCİ NO:250541082
 
+[pseudocode.md.txt](https://github.com/user-attachments/files/22925847/pseudocode.md.txt)
 
-sistemin kısa açıklaması (maks. 5-6 satır)
+[flowchart.dot.txt](https://github.com/user-attachments/files/22925895/flowchart.dot.txt)
+
+<img width="1380" height="1426" alt="graphviz" src="https://github.com/user-attachments/assets/8707238e-5a91-431a-98ad-0f93f3ac05fe" />
+
+https://g.co/gemini/share/e329433bd23b
+
