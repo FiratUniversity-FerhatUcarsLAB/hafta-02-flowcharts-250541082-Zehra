@@ -11,9 +11,10 @@ ADI SOYADI : Zehra ÖZDEMİR
 
 <img width="2650" height="1148" alt="graphviz" src="https://github.com/user-attachments/assets/a19d1924-8fec-4240-bf33-70211277bdcf" />
 
-https://g.co/gemini/share/66cf353a38ba
 
-https://g.co/gemini/share/a5c3540dbe6d
+[Uplohttps://gemini.google.com/share/f444a1b5697f[llm-conversations.txt](https://github.com/user-attachments/files/22943122/llm-conversations.txt)
+
+[Uploading llm-convehttps://gemini.google.com/share/308b1810d67frsations.txt…]()
 
 
 [README.md.txt](https://github.com/user-attachments/files/22927037/README.md.txt)
