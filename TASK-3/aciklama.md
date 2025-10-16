@@ -1,11 +1,9 @@
-ADI SOYADI : Zehra ÖZDEMİR 
-ÖĞRENCİ NO: 250541082
+1-Giriş ve Doğrulama: Sistem, kullanıcıdan kimlik no ve şifre alarak başlar. Bir döngü içinde KullaniciDogrula fonksiyonu ile bilgilerin doğruluğu kontrol edilir.
 
-[pseudocode.md.txt](https://github.com/user-attachments/files/22926133/pseudocode.md.txt)
+2-Ana İşlem Döngüsü: Başarılı girişten sonra, öğrenci bir ana menüye yönlendirilir ve oturum kapatılana kadar ana işlem döngüsünde kalır.
 
-[flowchart.dot.txt](https://github.com/user-attachments/files/22926161/flowchart.dot.txt)
+3-Menü Kontrolü: Ana menüde kullanıcı; ders kayıt işlemlerini, not görüntülemeyi veya çıkışı seçebilir.
 
-<img width="1371" height="1358" alt="graphviz" src="https://github.com/user-attachments/assets/03626938-94de-46ca-8499-a9b5d4977c00" />
+4-Ders Kayıt: DersKayitIslemleri fonksiyonu, mevcut dersleri listeler, kontenjan kontrolü yaparak ders ekleme veya bırakma işlemlerini yönetir.
 
-
-[llm-conversations.txt](https://github.com/user-attachments/files/22943054/llm-conversations.txt)
+5-Not Görüntüleme: NotGoruntule fonksiyonu, öğrencinin sisteme tanımlı olan notlarını basitçe ekrana basar.
