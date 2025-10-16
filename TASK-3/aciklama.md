@@ -1,3 +1,6 @@
+ZEHRA ÖZDEMİR 
+250541082
+
 1-Giriş ve Doğrulama: Sistem, kullanıcıdan kimlik no ve şifre alarak başlar. Bir döngü içinde KullaniciDogrula fonksiyonu ile bilgilerin doğruluğu kontrol edilir.
 
 2-Ana İşlem Döngüsü: Başarılı girişten sonra, öğrenci bir ana menüye yönlendirilir ve oturum kapatılana kadar ana işlem döngüsünde kalır.
