@@ -1,17 +1,9 @@
-[llm-conversations.txt](https://github.com/user-attachments/files/22942973/llm-conversations.txt)İsim - Soy isim : Zehra ÖZDEMİR 
-Öğrenci No:250541082
+1-Doğrulama: Kullanıcının PIN'i ve istenen miktar kontrol edilir (PIN doğru mu, miktar pozitif ve limitler içinde mi?).
 
-[pseudocode.md.txt](https://github.com/user-attachments/files/22910803/pseudocode.md.txt)
-   
-[flowchart.dot.txt](https://github.com/user-attachments/files/22910987/flowchart.dot.txt)
+2-Yeterlilik Kontrolleri: Önce ATM'nin fiziksel olarak istenen paraya sahip olup olmadığı, sonra da kullanıcının hesabında yeterli bakiye olup olmadığı denetlenir.
 
-<img width="1386" height="1808" alt="image" src="https://github.com/user-attachments/assets/571c9f6f-b623-47a7-a59c-e61c6e23c10c" />
- 
-[Uploading llmhttps://gemini.google.com/share/99aebc6001c4-conversations.txt…]()
+3-Para Transferi: Tüm kontroller başarılı ise, kullanıcının yeni bakiyesi hesaplanır ve bankanın veritabanında güncellenir.
 
+4-Fiziksel Teslimat: Veritabanı güncellemesi onaylandıktan sonra, ATM istenen miktarı fiziksel olarak hazneye teslim eder ve makbuzu basar.
 
-sistem açıklaması:
-
-[README.md.txt](https://github.com/user-attachments/files/22911215/README.md.txt)
-
-
+5-Hata Durumu: Herhangi bir adımda bir sorun çıkarsa (PIN yanlışlığı, yetersiz bakiye vb.), işlem derhal durdurulur ve kullanıcıya hata mesajı gösterilir.
