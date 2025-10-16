@@ -1,3 +1,7 @@
+ZEHRA ÖZDEMİR 
+250541082
+
+
 1-Doğrulama: Kullanıcının PIN'i ve istenen miktar kontrol edilir (PIN doğru mu, miktar pozitif ve limitler içinde mi?).
 
 2-Yeterlilik Kontrolleri: Önce ATM'nin fiziksel olarak istenen paraya sahip olup olmadığı, sonra da kullanıcının hesabında yeterli bakiye olup olmadığı denetlenir.
