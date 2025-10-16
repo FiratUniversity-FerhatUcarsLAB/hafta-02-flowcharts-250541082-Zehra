@@ -1,0 +1,68 @@
+digraph AlisverisSistemi {
+    // Graf ayarları
+    rankdir=TB; // Akış Yönü: Yukarıdan Aşağıya (Top-Bottom)
+    node [shape=box, style=filled, fillcolor=lightblue]; // Varsayılan düğüm stili
+
+    // Başlangıç ve Bitiş Düğümleri
+    Start [label="BAŞLA\n(Veri Yapıları Tanımlanır)", shape=oval, fillcolor=lightgreen];
+    End [label="BİTİŞ", shape=oval, fillcolor=lightcoral];
+
+    // Ana Döngü ve Menü
+    Loop_Start [label="DÖNGÜ BAŞLANGICI\n(DONGU_DEVAM_EKRANI = DOĞRU İKEN)", shape=diamond, fillcolor=yellow];
+    Menu [label="MENÜ GÖSTER\n(1: Ekle, 2: Sepet, 3: Ödeme, 4: Çıkış)", shape=box];
+    Input [label="Kullanıcıdan Seçim Al", shape=parallelogram];
+
+    // Karar Düğümleri (Seçim İşlemi)
+    Choice_1 [label="Seçim = 1 (Ürün Ekle)?", shape=diamond];
+    Choice_2 [label="Seçim = 2 (Sepet Gör)?", shape=diamond];
+    Choice_3 [label="Seçim = 3 (Ödeme Yap)?", shape=diamond];
+    Choice_4 [label="Seçim = 4 (Çıkış)?", shape=diamond];
+    Invalid_Choice [label="GEÇERSİZ SEÇİM", shape=box, fillcolor=red];
+
+    // İşlem Düğümleri
+    Add_Product [label="Fonksiyon_UrunEkle Çağrısı", shape=box];
+    View_Cart [label="Fonksiyon_SepetGoruntuleVeHesapla Çağrısı", shape=box];
+    Checkout [label="Fonksiyon_Odeme Çağrısı", shape=box];
+    Exit_System [label="DONGU_DEVAM_EKRANI = YANLIS", shape=box];
+
+    // Ödeme İçi Kontrol
+    Payment_Check [label="TOPLAM_TUTAR > 0?", shape=diamond];
+    Payment_Success [label="Ödeme Başarılı ve Çıkış", shape=box];
+    Payment_Fail [label="Sepet Boş Uyarısı", shape=box];
+
+    // Akış Bağlantıları
+    Start -> Loop_Start;
+    Loop_Start -> Menu [label="DOĞRU"];
+    Loop_Start -> End [label="YANLIŞ"];
+
+    Menu -> Input;
+    Input -> Choice_1;
+
+    // Seçim 1: Ürün Ekle
+    Choice_1 -> Add_Product [label="DOĞRU"];
+    Add_Product -> Loop_Start;
+
+    // Seçim 2: Sepeti Görüntüle
+    Choice_1 -> Choice_2 [label="YANLIŞ"];
+    Choice_2 -> View_Cart [label="DOĞRU"];
+    View_Cart -> Loop_Start;
+
+    // Seçim 3: Ödeme Yap
+    Choice_2 -> Choice_3 [label="YANLIŞ"];
+    Choice_3 -> Payment_Check [label="DOĞRU"];
+    
+    Payment_Check -> Payment_Success [label="DOĞRU"];
+    Payment_Success -> Exit_System;
+    
+    Payment_Check -> Payment_Fail [label="YANLIŞ"];
+    Payment_Fail -> Loop_Start; // Sepet boşsa menüye dön
+
+    // Seçim 4: Çıkış
+    Choice_3 -> Choice_4 [label="YANLIŞ"];
+    Choice_4 -> Exit_System [label="DOĞRU"];
+    Exit_System -> Loop_Start; // Döngü sonlanır, Loop_Start'tan End'e gider.
+
+    // Geçersiz Seçim
+    Choice_4 -> Invalid_Choice [label="YANLIŞ"];
+    Invalid_Choice -> Loop_Start; 
+}
