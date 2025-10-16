@@ -1,3 +1,6 @@
+ZEHRA ÖZDEMİR
+250541082
+
 1-Başlangıçta sistem, sepeti ve toplam tutarı sıfırlar ve bir ana menü döngüsünü başlatır.
 
 2-Kullanıcı menüden bir işlem (Ürün Ekle, Sepeti Görüntüle, Ödeme, Çıkış) seçer.
