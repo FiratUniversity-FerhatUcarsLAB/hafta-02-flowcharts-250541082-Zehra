@@ -1,0 +1,71 @@
+digraph ATM_ParaCekme_Akisi {
+    // Grafiğin genel ayarları
+    rankdir=TB; // Yukarıdan aşağıya akış (Top to Bottom)
+    node [shape=box]; // Varsayılan düğüm şekli kutu
+    
+    // Şekil Tanımlamaları:
+    node [shape=oval, style="filled", fillcolor="palegreen"]; Baslangic [label="BAŞLANGIÇ"];
+    node [shape=box, style="filled", fillcolor="lightblue"]; İşlem [label="İşlem Adımı"];
+    node [shape=diamond, style="filled", fillcolor="yellow"]; Karar [label="Karar Noktası"];
+    node [shape=oval, style="filled", fillcolor="salmon"]; BitisHata [label="HATA/SON"];
+    node [shape=oval, style="filled", fillcolor="lightgreen"]; BitisBasarili [label="BAŞARILI SON"];
+
+    // 1. PIN Doğrulama
+    Baslangic -> Karar_PIN [label="PIN ve Miktar Girildi"];
+    Karar_PIN [label="PIN Doğru mu?"];
+    Karar_PIN -> BitisHata_PIN [label="Hayır"];
+    BitisHata_PIN [label="Hatalı PIN"];
+
+    // 2. Miktar Doğrulama
+    Karar_PIN -> Karar_MiktarPozitif [label="Evet"];
+    Karar_MiktarPozitif [label="İstenen Miktar > 0?"];
+    Karar_MiktarPozitif -> BitisHata_MiktarNegatif [label="Hayır"];
+    BitisHata_MiktarNegatif [label="Geçersiz Miktar"];
+    
+    // 3. Limit Kontrolü
+    Karar_MiktarPozitif -> Karar_Limit [label="Evet"];
+    Karar_Limit [label="Miktar Limitler İçinde mi?"];
+    Karar_Limit -> BitisHata_Limit [label="Hayır"];
+    BitisHata_Limit [label="Limit Dışı Miktar"];
+
+    // 4. ATM Yeterliliği Kontrolü
+    Karar_Limit -> Karar_ATMYeter [label="Evet"];
+    Karar_ATMYeter [label="ATM'de Yeterli Para Var mı?"];
+    Karar_ATMYeter -> BitisHata_ATMYetersiz [label="Hayır"];
+    BitisHata_ATMYetersiz [label="ATM Yetersiz Bakiye"];
+
+    // 5. Hesap Bakiye Kontrolü
+    Karar_ATMYeter -> Karar_HesapBakiye [label="Evet"];
+    Karar_HesapBakiye [label="Hesap Bakiyesi Yeterli mi? (Miktar <= Bakiye)"];
+    Karar_HesapBakiye -> BitisHata_HesapYetersiz [label="Hayır"];
+    BitisHata_HesapYetersiz [label="Hesap Yetersiz Bakiye"];
+    
+    // 6. İşlem Gerçekleştirme
+    Karar_HesapBakiye -> Islem_Guncelle [label="Evet"];
+    Islem_Guncelle [label="Yeni Bakiye Hesapla"];
+    
+    // 7. Veritabanı Güncelleme
+    Islem_Guncelle -> Karar_DB [label="Bakiye Güncelle"];
+    Karar_DB [label="Veritabanı Güncelleme Başarılı mı?"];
+    Karar_DB -> BitisHata_DB [label="Hayır"];
+    BitisHata_DB [label="DB Güncelleme Hatası"];
+
+    // 8. Başarılı İşlem Akışı
+    Karar_DB -> Islem_ParaTeslim [label="Evet"];
+    Islem_ParaTeslim [label="Parayı Teslim Et (Fiziksel)"];
+    Islem_ParaTeslim -> Islem_ATM_Sayim_Azalt;
+    Islem_ATM_Sayim_Azalt [label="ATM Para Sayımını Azalt"];
+    Islem_ATM_Sayim_Azalt -> Islem_Makbuz;
+    Islem_Makbuz [label="Makbuzu Bas"];
+    
+    // 9. Sonuç
+    Islem_Makbuz -> BitisBasarili [label="Sonuç Ekrana Yazdırılır"];
+
+    // Hata düğümlerini tek bir Bitiş düğümüne yönlendirme (isteğe bağlı)
+    BitisHata_PIN -> BitisHata;
+    BitisHata_MiktarNegatif -> BitisHata;
+    BitisHata_Limit -> BitisHata;
+    BitisHata_ATMYetersiz -> BitisHata;
+    BitisHata_HesapYetersiz -> BitisHata;
+    BitisHata_DB -> BitisHata;
+}
