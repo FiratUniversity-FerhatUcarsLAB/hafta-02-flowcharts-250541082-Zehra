@@ -1,0 +1,59 @@
+digraph RandevuAlmaAlgoritmasi {
+    // Grafik Ayarları
+    rankdir=TB; // Akış yönü: Yukarıdan Aşağıya (Top to Bottom)
+    node [shape=box, style=filled, fillcolor=lightblue];
+    
+    // Düğüm Tanımlamaları
+    BASLA [shape=Mdiamond, fillcolor=greenyellow, label="Randevu_Al(TC, Uzmanlık, Tarih)"];
+    
+    // 1. Hasta Doğrulama
+    S1_KONTROL [shape=diamond, fillcolor=yellow, label="Hasta (TC) Kaydı Var mı?"];
+    S1_HATA [shape=box, fillcolor=lightcoral, label="Hata: Hasta Kaydı Yok\nGeri Dön: YANLIŞ"];
+    
+    // 2. Doktor Filtreleme
+    S2_KONTROL [shape=diamond, fillcolor=yellow, label="Uzmanlık Alanında\nUygun Doktor Var mı?"];
+    S2_HATA [shape=box, fillcolor=lightcoral, label="Hata: Doktor Yok\nGeri Dön: YANLIŞ"];
+    
+    // 3. Zaman Dilimi Bulma
+    S3_DONGU [shape=box, fillcolor=lightgrey, label="HER BİR Uygun Doktor VE Saat Dilimi İçin Döngü"];
+    S3_KONTROL [shape=diamond, fillcolor=yellow, label="Seçilen Saat Dilimi Boş mu?"];
+    S3_HATA [shape=box, fillcolor=lightcoral, label="Hata: Uygun Saat Yok\nGeri Dön: YANLIŞ"];
+    S3_BASARILI [shape=box, fillcolor=palegreen, label="Uygun Saat Bulundu"];
+    
+    // 4. Randevuyu Kaydetme
+    S4_ISLEM [shape=box, fillcolor=skyblue, label="Yeni Randevu Kaydını Oluştur\n(Hasta ID, Doktor ID, Saat, Durum='Planlandı')"];
+    S4_BILDIRIM [shape=box, fillcolor=skyblue, label="Randevu Onay Mesajı Gönder"];
+    
+    BITIS [shape=Mdiamond, fillcolor=greenyellow, label="Geri Dön: DOĞRU (Başarılı)"];
+
+    // Akış Bağlantıları
+    BASLA -> S1_KONTROL;
+    
+    // 1. Akış
+    S1_KONTROL -> S1_HATA [label="Hayır"];
+    S1_KONTROL -> S2_KONTROL [label="Evet"];
+    
+    // 2. Akış
+    S2_KONTROL -> S2_HATA [label="Hayır"];
+    S2_KONTROL -> S3_DONGU [label="Evet"];
+    
+    // 3. Akış
+    S3_DONGU -> S3_KONTROL;
+    S3_KONTROL -> S3_DONGU [label="Hayır"]; // Bir sonraki saati/doktoru dene
+    S3_KONTROL -> S3_BASARILI [label="Evet"]; 
+    S3_BASARILI -> S4_ISLEM [label="Döngüden Çık"]; 
+    
+    // Eğer tüm döngü biterse ve saat bulunamazsa
+    S3_DONGU -> S3_HATA [label="Döngü Bitti ve Uygun Saat Yok"];
+    
+    // 4. Akış
+    S4_ISLEM -> S4_BILDIRIM;
+    S4_BILDIRIM -> BITIS;
+    
+    // Hata Akışları
+    S1_HATA -> BITIS_HATA [label="YANLIŞ", style=dashed];
+    S2_HATA -> BITIS_HATA [label="YANLIŞ", style=dashed];
+    S3_HATA -> BITIS_HATA [label="YANLIŞ", style=dashed];
+    
+    BITIS_HATA [shape=Mdiamond, fillcolor=red, label="BİTİŞ (HATA)"];
+}
