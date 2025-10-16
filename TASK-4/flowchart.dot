@@ -1,0 +1,89 @@
+digraph OBS_AlgoritmaAkisi {
+    // Grafiğin genel ayarları
+    rankdir=TB; // Yukardan aşağı akış (Top to Bottom)
+    node [shape=box, style="filled", fillcolor="#f0f0f0"];
+
+    // 1. Ana Program ve Giriş (Login)
+    N_Basla [label="BAŞLA: Program Çalışıyor", shape=egg, fillcolor="#ccffcc"];
+    N_Giris_Dongu [label="DÖNGÜ: Oturum Açık Değil İken", shape=diamond, fillcolor="#ffe0b2"];
+    N_KullaniciDogrula [label="FONKSİYON: KullaniciDogrula(KimlikNo, Sifre)", shape=box];
+    N_DogrulamaBasarili [label="Doğrulama Başarılı (Oturum Açık = DOĞRU)", shape=diamond, fillcolor="#c2e0ff"];
+    N_AnaIslem_Dongu [label="DÖNGÜ: Oturum Açık İken", shape=diamond, fillcolor="#ffccb3"];
+    N_Hata [label="Hata: Hatalı Kimlik/Şifre", shape=box, fillcolor="#ffad99"];
+    
+    // 2. Ana Menü ve İşlevler
+    N_AnaMenu [label="FONKSİYON: AnaMenu() / Seçim Oku", shape=box, fillcolor="#c2e0ff"];
+    N_Secim [label="Seçim Kontrolü (DURUM Secim_Ana)", shape=diamond];
+    
+    // 3. Alt İşlevler
+    N_DersKayit [label="FONKSİYON: DersKayitIslemleri()", shape=box, fillcolor="#c2e0ff"];
+    N_NotGoruntule [label="FONKSİYON: NotGoruntule()", shape=box, fillcolor="#c2e0ff"];
+    N_Cikis [label="Oturum Kapatıldı (Oturum Açık = YANLIŞ)", shape=egg, fillcolor="#ffccb3"];
+    N_Son [label="SON: Program Durdu", shape=egg, fillcolor="#ccffcc"];
+
+    // --- Akış Tanımlamaları (Kenarlar) ---
+
+    // Giriş Akışı
+    N_Basla -> N_Giris_Dongu;
+    
+    // Giriş Döngüsü
+    N_Giris_Dongu -> N_KullaniciDogrula [label="OKU Kimlik/Şifre"];
+    N_KullaniciDogrula -> N_DogrulamaBasarili;
+    
+    // Doğrulama Kontrolü
+    N_DogrulamaBasarili -> N_AnaIslem_Dongu [label="DOĞRU (Başarılı)"];
+    N_DogrulamaBasarili -> N_Hata [label="YANLIŞ (Başarısız)"];
+    N_Hata -> N_Giris_Dongu [label="Tekrar Dene"];
+
+    // Ana İşlem Döngüsü
+    N_AnaIslem_Dongu -> N_AnaMenu;
+    N_AnaMenu -> N_Secim [label="Secim Geri Döndü"];
+    
+    // Ana Menü Seçimleri (DURUM)
+    N_Secim -> N_DersKayit [label="Seçim = 1"];
+    N_Secim -> N_NotGoruntule [label="Seçim = 2"];
+    N_Secim -> N_Cikis [label="Seçim = 3"];
+    N_Secim -> N_AnaIslem_Dongu [label="VARSAYILAN (Geçersiz)"];
+
+    // İşlevlerden Geri Dönüş
+    N_DersKayit -> N_AnaIslem_Dongu [label="Ana Menüye Dön (4)"];
+    N_NotGoruntule -> N_AnaIslem_Dongu [label="Geri Dön"]; // İşlem bitince ana döngüye döner
+
+    // Çıkış ve Program Sonu
+    N_Cikis -> N_AnaIslem_Dongu [label="Oturum Açık = YANLIŞ"]; // Döngü koşulu YANLIŞ olur ve kırılır
+    N_AnaIslem_Dongu -> N_Son [label="Döngü Sonu (Oturum Kapatıldı)"];
+
+    // --- Ders Kayıt Alt Grafiği (Detay) ---
+    subgraph cluster_DersKayit {
+        label = "Ders Kayıt İşlemleri (Alt Akış)";
+        style = rounded;
+        color = "#3399ff";
+
+        N_DK_Basla [label="DersKayitIslemleri()", shape=octagon, fillcolor="#b3d9ff"];
+        N_DK_Menu [label="Alt Menü / Seçim Oku", shape=box];
+        N_DK_Secim [label="Seçim Kontrolü", shape=diamond];
+        
+        N_DK_Goruntule [label="Dersleri Görüntüle", shape=box];
+        N_DK_Ekle [label="Ders Ekle İşlemi", shape=box];
+        N_DK_Birak [label="Ders Bırak İşlemi", shape=box];
+        N_DK_AnaDonus [label="Ana Menüye Dön (Geri Dön)", shape=octagon, fillcolor="#b3d9ff"];
+
+        N_DK_Basla -> N_DK_Menu;
+        N_DK_Menu -> N_DK_Secim;
+        
+        N_DK_Secim -> N_DK_Goruntule [label="1. Görüntüle"];
+        N_DK_Secim -> N_DK_Ekle [label="2. Ekle"];
+        N_DK_Secim -> N_DK_Birak [label="3. Bırak"];
+        N_DK_Secim -> N_DK_AnaDonus [label="4. Ana Menü"];
+        N_DK_Secim -> N_DK_Menu [label="VARSAYILAN"];
+
+        // Alt işlemler bitince alt menüye döner
+        N_DK_Goruntule -> N_DK_Menu;
+        N_DK_Ekle -> N_DK_Menu;
+        N_DK_Birak -> N_DK_Menu;
+        
+        // Dış grafiğe bağlantı
+        N_DersKayit -> N_DK_Basla [style=dotted]; // Giriş
+        N_DK_AnaDonus -> N_DersKayit [style=dotted]; // Çıkış (N_DersKayit -> N_AnaIslem_Dongu'ya bağlı)
+    }
+}
