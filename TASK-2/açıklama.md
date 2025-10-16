@@ -7,5 +7,6 @@ ADI SOYADI:Zehra ÖZDEMİR
 
 <img width="1380" height="1426" alt="graphviz" src="https://github.com/user-attachments/assets/8707238e-5a91-431a-98ad-0f93f3ac05fe" />
 
-https://g.co/gemini/share/e329433bd23b
 
+
+[llm-conversations.txt](https://github.com/user-attachments/files/22943025/llm-conversations.txt)
