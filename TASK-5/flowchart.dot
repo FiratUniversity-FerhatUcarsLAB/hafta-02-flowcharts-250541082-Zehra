@@ -1,0 +1,57 @@
+digraph AkilliEvGuvenlikSistemi {
+    // Grafik Ayarları
+    rankdir=TB; // Akış yönü: Yukarıdan Aşağıya (Top-Bottom)
+    node [shape=box, style="filled", fillcolor="lightblue"];
+
+    // Düğümler (Adımlar) Tanımlanması
+    BASLA [shape=Mdiamond, fillcolor="lightgreen", label="BAŞLA\nSistem_Durumu = KAPALI"];
+    SISTEM_KUR [shape=box, label="Sistemi Kur (Durum=KURULU)"];
+    KONTROL_DONGUSU [shape=box, fillcolor="yellow", label="DÖNGÜ: SÜREKLİ_ÇALIŞ"];
+    DURUM_KONTROL [shape=diamond, label="Sistem_Durumu == KURULU ?"];
+    HAREKET_OKU [shape=box, label="Hareket_Değeri = Sensor_Verisi_Oku(\"HAREKET\")"];
+    HAREKET_KONTROL [shape=diamond, label="Hareket_Değeri > Eşik_Hareket ?"];
+    KAPI_OKU [shape=box, label="Kapi_Durumu = Sensor_Verisi_Oku(\"KAPI\")"];
+    KAPI_KONTROL [shape=diamond, label="Kapi_Durumu == Eşik_Kapı_Açık ?"];
+    ALARM_CALISTIR [shape=box, fillcolor="red", fontcolor="white", label="Sesli_Alarm_Etkinleştir()\nAlarm_Aktif = DOĞRU"];
+    ALARM_KONTROL [shape=diamond, label="Alarm_Aktif == DOĞRU ?"];
+    BILDIRIM_KONTROL [shape=diamond, label="Kullanıcı_Bildirildi == YANLIŞ ?"];
+    BILDIRIM_GONDER [shape=box, fillcolor="orange", fontcolor="white", label="Kullaniciya_Bildirim_Gonder()\nKullanıcı_Bildirildi = DOĞRU"];
+    SISTEM_KAPALI [shape=box, fillcolor="lightgray", label="Sistem KAPALI Durumda\nDeğişkenleri Sıfırla"];
+    SON [shape=Mdiamond, fillcolor="lightgreen", label="BEKLE(1) ve DÖNGÜ_YENİLE"];
+
+    // Bağlantılar (Akış) Tanımlanması
+    BASLA -> SISTEM_KUR;
+    SISTEM_KUR -> KONTROL_DONGUSU;
+    KONTROL_DONGUSU -> DURUM_KONTROL;
+
+    // A. Sistem Kurulu İse (DOĞRU kolu)
+    DURUM_KONTROL -> HAREKET_OKU [label="DOĞRU"];
+    
+    HAREKET_OKU -> HAREKET_KONTROL;
+    HAREKET_KONTROL -> ALARM_CALISTIR [label="DOĞRU"];
+    HAREKET_KONTROL -> KAPI_OKU [label="YANLIŞ"]; // Hareket yoksa Kapı kontrolüne geç
+
+    ALARM_CALISTIR -> KAPI_OKU; // Alarm çalsa bile Kapı kontrolü devam eder (paralel sensör mantığı)
+    
+    KAPI_OKU -> KAPI_KONTROL;
+    KAPI_KONTROL -> ALARM_CALISTIR [label="DOĞRU"]; // Kapı ihlali de alarmı çalıştırır
+    KAPI_KONTROL -> ALARM_KONTROL [label="YANLIŞ"]; // Kapı ihlali yoksa Alarm yönetimine geç
+
+    // Alarm Yönetimi
+    ALARM_KONTROL -> BILDIRIM_KONTROL [label="DOĞRU"]; // Alarm aktif
+    ALARM_KONTROL -> SON [label="YANLIŞ"]; // Alarm aktif değilse döngü sonuna git
+
+    BILDIRIM_KONTROL -> BILDIRIM_GONDER [label="YANLIŞ"]; // Daha önce bildirilmediyse
+    BILDIRIM_KONTROL -> SON [label="DOĞRU"]; // Zaten bildirilmişse
+
+    BILDIRIM_GONDER -> SON;
+
+    // B. Sistem Kapalı İse (YANLIŞ kolu)
+    DURUM_KONTROL -> SISTEM_KAPALI [label="YANLIŞ"];
+    SISTEM_KAPALI -> SON;
+
+    SON -> KONTROL_DONGUSU [label="Tekrarla", style=dashed, color=blue];
+
+    // Ek Açıklamalar
+    {rank=same; ALARM_CALISTIR; BILDIRIM_GONDER} // Bu adımların aynı seviyede olmasını sağlar.
+}
