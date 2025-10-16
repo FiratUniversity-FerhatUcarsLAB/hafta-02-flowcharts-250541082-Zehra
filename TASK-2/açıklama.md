@@ -1,12 +1,9 @@
-ADI SOYADI:Zehra ÖZDEMİR 
- ÖĞRENCİ NO:250541082
+1-Başlangıçta sistem, sepeti ve toplam tutarı sıfırlar ve bir ana menü döngüsünü başlatır.
 
-[pseudocode.md.txt](https://github.com/user-attachments/files/22925847/pseudocode.md.txt)
+2-Kullanıcı menüden bir işlem (Ürün Ekle, Sepeti Görüntüle, Ödeme, Çıkış) seçer.
 
-[flowchart.dot.txt](https://github.com/user-attachments/files/22925895/flowchart.dot.txt)
+3-Seçime göre ilgili fonksiyon çağrılır: Ürün Ekle seçeneğinde ürün, fiyat ve miktar sepete eklenir.Sepet Görüntüle seçeneğinde sepet içeriği listelenir ve tüm ürünlerin toplam tutarı hesaplanıp güncellenir.
 
-<img width="1380" height="1426" alt="graphviz" src="https://github.com/user-attachments/assets/8707238e-5a91-431a-98ad-0f93f3ac05fe" />
+4-Ödeme Yap seçeneğinde toplam tutar ($>0$ ise) ödeme başarılı olarak simüle edilir ve ana döngü sonlanır.
 
-
-
-[llm-conversations.txt](https://github.com/user-attachments/files/22943025/llm-conversations.txt)
+5-Kullanıcı Çıkış yapana veya başarılı bir şekilde Ödeme yapana kadar menü döngüsü devam eder.
